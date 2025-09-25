@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 @WebServlet(name = "requestHeaderServlet", urlPatterns = "/request-header")
 public class RequestHeaderServlet extends HttpServlet {
@@ -15,6 +16,7 @@ public class RequestHeaderServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Start Line 정보 불러오기
         printStartLine(request);
+        printHeaders(request);
 
     }
 
@@ -43,6 +45,43 @@ public class RequestHeaderServlet extends HttpServlet {
         request.getQueryString() = null
         request.isSecure() = false
         --- REQUEST-LINE - end ---
+         */
+    }
+
+    private void printHeaders(HttpServletRequest request) {
+        System.out.println("--- Headers - start ---");
+
+//        Enumeration<String> headerNames = request.getHeaderNames();
+//        while (headerNames.hasMoreElements()) {
+//            String headerName = headerNames.nextElement();
+//            System.out.println(headerName + " = " + headerName);
+//        }
+
+        request.getHeaderNames().asIterator()
+                        .forEachRemaining(headerName -> System.out.println(headerName + " = " + headerName));
+
+        System.out.println("--- Headers - end ---");
+        System.out.println();
+
+        /*
+        --- Headers - start ---
+        host = host
+        connection = connection
+        cache-control = cache-control
+        sec-ch-ua = sec-ch-ua
+        sec-ch-ua-mobile = sec-ch-ua-mobile
+        sec-ch-ua-platform = sec-ch-ua-platform
+        upgrade-insecure-requests = upgrade-insecure-requests
+        user-agent = user-agent
+        accept = accept
+        sec-fetch-site = sec-fetch-site
+        sec-fetch-mode = sec-fetch-mode
+        sec-fetch-user = sec-fetch-user
+        sec-fetch-dest = sec-fetch-dest
+        accept-encoding = accept-encoding
+        accept-language = accept-language
+        cookie = cookie
+        --- Headers - end ---
          */
     }
 }
